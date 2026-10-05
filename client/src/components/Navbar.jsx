@@ -1,11 +1,11 @@
 function Navbar(){
     return (
-        <nav>
-            <h1>JobTracker</h1>
+        <nav className="flex items-center justify-between border-b px-6 py-4">
+            <h1 className="text-xl font-bold">JobTracker</h1>
 
-            <div>
-                <a href="/">Dashboard</a>
-                <a href="/applications">Applications</a>
+            <div className="flex gap-6">
+                <a href="/" className="text-gray-600 hover:text-black">Dashboard</a>
+                <a href="/applications" className="text-gray-600 hover:text-black">Applications</a>
             </div>
         </nav>
     );
