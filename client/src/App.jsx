@@ -1,16 +1,18 @@
-import Navbar from "./components/Navbar";
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 import MainLayout from "./layouts/MainLayout";
+import Dashboard from "./pages/Dashboard";
+import Applications from "./pages/Applications";
 
 function App() {
   return (
-
-    <MainLayout>
-      <main>
-        <h2 className="text-3xl font-bold">Welcome to Jobtracker</h2>
-        <p className="mt-2 text-gray-600">Track your job applications in one place. </p>
-      </main>
-    </MainLayout>
-
+    <BrowserRouter>
+      <MainLayout>
+        <Routes>
+          <Route path="/" element={<Dashboard/>}/>
+          <Route path="/applications" element={<Applications/>}/>
+        </Routes>
+      </MainLayout>
+    </BrowserRouter>
   )
 };
 export default App;
