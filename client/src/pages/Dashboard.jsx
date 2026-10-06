@@ -1,26 +1,6 @@
 import ApplicationCard from "../components/ApplicationCard";
 import StatCard from "../components/StatCard";
-
-const recentApplications = [
-    {
-        id: 1,
-        comapny: "Google",
-        position: 'Frondene Dev',
-        status: "Applied"
-    },
-    {
-        id: 2,
-        comapny: "Microsoft",
-        position: 'React Dev',
-        status: "Interview"
-    },
-    {
-        id: 3,
-        comapny: "ABC",
-        position: 'Junior Dev',
-        status: "Rejected"
-    }
-]
+import applications from "../data/applications";
 
 function Dashboard() {
     return (
@@ -40,10 +20,10 @@ function Dashboard() {
                 <h2 className="text-xl font-semibold">Recent Applications</h2>
 
                 <div className="mt-4 space-y-4">
-                    {recentApplications.map((application) => (
+                    {applications.slice(0,3).map((application) => (
                         <ApplicationCard
                             key={application.id}
-                            company={application.comapny}
+                            company={application.company}
                             position={application.position}
                             status={application.status}
                         />
