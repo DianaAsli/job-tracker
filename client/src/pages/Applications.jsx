@@ -40,14 +40,21 @@ function Applications() {
             </div>
 
             <div className="mt-8 space-y-4">
-                {filteredApplications.map((application) => (
-                    <ApplicationCard
-                        key={application.id}
-                        company={application.company}
-                        position={application.position}
-                        status={application.status}
-                    />
-                ))}
+                {filteredApplications.length > 0 ?
+                    (filteredApplications.map((application) => (
+                        <ApplicationCard
+                            key={application.id}
+                            company={application.company}
+                            position={application.position}
+                            status={application.status}
+                        />))
+                    ) : (
+                        <div className="rounded-xl border bg-white p-8 text-center">
+                            <h2 className="text-lg font-semibold">No applications found.</h2>
+                            <p className="mt-2 text-sm text-gray-500">Try changin your search or filter.</p>
+                        </div>
+                    )
+                }
             </div>
         </div>
     );
