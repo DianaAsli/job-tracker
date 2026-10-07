@@ -7,6 +7,7 @@ function Applications() {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedStatus, setSelectedStatus] = useState('All');
     const [applicationList, setApplicationList] = useState(applications);
+    const [editingApplicationId, setEditingApplicationId] = useState(null);
 
     const handleAddApplication = (newApplication) => {
         const application = {
@@ -21,12 +22,28 @@ function Applications() {
     }
 
     const handleDeleteApplication = (id) => {
-        setApplicationList((currentApplications) => 
-        currentApplications.filter((application) => application.id !== id))
+        setApplicationList((currentApplications) =>
+            currentApplications.filter((application) => application.id !== id))
+    }
+
+    const handleEditApplication = (id) => {
+        setEditingApplicationId(id);
+    }
+    const editingApplication = applicationList.find((application) => application.id === editingApplicationId);
+
+    const handleUpdateApplication = (id, updatedApplication) => {
+        setApplicationList((currentApplications) =>
+            currentApplications.map((application) =>
+                application.id === id ?
+                    {
+                        ...application, ...updatedApplication
+                    } : application)
+        );
+        setEditingApplicationId(null);
     }
 
     const filteredApplications = applicationList.filter((application) => {
-        const matchesSearch = application.company.toLowerCase().includes(searchTerm.toLocaleLowerCase())
+        const matchesSearch = application.company.toLowerCase().includes(searchTerm.toLowerCase())
         const matchesStatus = selectedStatus === 'All' || application.status === selectedStatus;
 
         return matchesSearch && matchesStatus;
@@ -58,7 +75,11 @@ function Applications() {
                 </select>
             </div>
 
-            <AddApplicationForm onAddApplication={handleAddApplication}/>
+            <AddApplicationForm
+                onAddApplication={handleAddApplication}
+                editingApplication={editingApplication}
+                onEditApplication={handleUpdateApplication}
+                onCancelEdit={() => setEditingApplicationId(null)} />
 
             <div className="mt-6 space-y-4">
                 {filteredApplications.length > 0 ?
@@ -68,7 +89,8 @@ function Applications() {
                             company={application.company}
                             position={application.position}
                             status={application.status}
-                            onDelete={()=> handleDeleteApplication(application.id)}
+                            onEdit={() => handleEditApplication(application.id)}
+                            onDelete={() => handleDeleteApplication(application.id)}
                         />))
                     ) : (
                         <div className="rounded-xl border bg-white p-8 text-center">

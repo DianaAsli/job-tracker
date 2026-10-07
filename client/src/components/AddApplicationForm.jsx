@@ -1,11 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function AddApplicationForm({ onAddApplication }) {
+function AddApplicationForm({ onAddApplication, editingApplication, onCancelEdit, onEditApplication }) {
     const [formData, setFormData] = useState({
         company: "",
         position: "",
         status: "Applied"
     });
+
+    useEffect(() => {
+        if (editingApplication) {
+            setFormData({
+                company: editingApplication.company,
+                position: editingApplication.position,
+                status: editingApplication.status
+            });
+        }
+    }, [editingApplication]);
+
     const [error, setError] = useState('');
 
     return (
@@ -17,7 +28,11 @@ function AddApplicationForm({ onAddApplication }) {
             }
             setError('');
 
-            onAddApplication(formData);
+            if (editingApplication) {
+                onEditApplication(editingApplication.id, formData)
+            } else {
+                onAddApplication(formData);
+            }
 
             setFormData({
                 company: '',
@@ -79,8 +94,26 @@ function AddApplicationForm({ onAddApplication }) {
                 type="submit"
                 className="mt-6 rounded-lg bg-black px-5 py-3 font-medium text-white hoover:bg-gray-800"
             >
-                Add Application
+                {editingApplication ? 'Save changes' : 'Add application'}
             </button>
+
+            {editingApplication && (
+                <button
+                    type="button"
+                    onClick={() => {
+                        onCancelEdit();
+                        setFormData({
+                            company: '',
+                            position: '',
+                            status: 'Applied'
+                        });
+                        setError('');
+                    }}
+                    className="ml-2 rounded-lg border px-5 py-3 font-medium hover:bg-gray-50"
+                >
+                    Cancel
+                </button>
+            )}
         </form>
     );
 }

@@ -1,4 +1,4 @@
-function ApplicationCard({ company, position, status, onDelete }) {
+function ApplicationCard({ company, position, status, onDelete, onEdit }) {
     return (
         <div className="flex items-center justify-between rounded-xl border bg-white p-5 shadow-sm">
             <div>
@@ -7,6 +7,14 @@ function ApplicationCard({ company, position, status, onDelete }) {
             </div>
 
             <span className="rounded-full bg-gray-100 px-3 py-1 text-sm font-medium">{status}</span>
+
+            <button
+                type="button"
+                onClick={onEdit}
+                className="rounded-lg border px-3 text-sm font-medium text-green hoover:bg-green-50"
+            >
+                Edit
+            </button>
 
             <button
                 type="button"
