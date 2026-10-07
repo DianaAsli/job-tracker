@@ -1,6 +1,7 @@
 import AddApplicationForm from "../components/AddApplicationForm";
 import ApplicationCard from "../components/ApplicationCard";
 import ApplicationFilters from "../components/ApplicationFilters";
+import EmptyState from "../components/EmptyState";
 import applications from "../data/applications";
 import { useState } from "react";
 
@@ -56,11 +57,11 @@ function Applications() {
             <h1 className="text-3xl font-bold">Aplications</h1>
             <p className="mt-2 text-gray-600">Mange your applications here.</p>
 
-            <ApplicationFilters 
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-            selectedStatus={selectedStatus}
-            setSelectedStatus={setSelectedStatus}
+            <ApplicationFilters
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                selectedStatus={selectedStatus}
+                setSelectedStatus={setSelectedStatus}
             />
 
             <AddApplicationForm
@@ -81,10 +82,7 @@ function Applications() {
                             onDelete={() => handleDeleteApplication(application.id)}
                         />))
                     ) : (
-                        <div className="rounded-xl border bg-white p-8 text-center">
-                            <h2 className="text-lg font-semibold">No applications found.</h2>
-                            <p className="mt-2 text-sm text-gray-500">Try changin your search or filter.</p>
-                        </div>
+                        <EmptyState />
                     )
                 }
             </div>
