@@ -1,3 +1,4 @@
+import AddApplicationForm from "../components/AddApplicationForm";
 import ApplicationCard from "../components/ApplicationCard";
 import applications from "../data/applications";
 import { useState } from "react";
@@ -5,8 +6,21 @@ import { useState } from "react";
 function Applications() {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedStatus, setSelectedStatus] = useState('All');
+    const [applicationList, setApplicationList] = useState(applications);
 
-    const filteredApplications = applications.filter((application) => {
+    const handleAddApplication = (newApplication) => {
+        const application = {
+            id: Date.now(),
+            ...newApplication,
+        };
+
+        setApplicationList((currentApplications) =>
+            [...currentApplications,
+                application]
+        )
+    }
+
+    const filteredApplications = applicationList.filter((application) => {
         const matchesSearch = application.company.toLowerCase().includes(searchTerm.toLocaleLowerCase())
         const matchesStatus = selectedStatus === 'All' || application.status === selectedStatus;
 
@@ -39,7 +53,9 @@ function Applications() {
                 </select>
             </div>
 
-            <div className="mt-8 space-y-4">
+            <AddApplicationForm onAddApplication={handleAddApplication}/>
+
+            <div className="mt-6 space-y-4">
                 {filteredApplications.length > 0 ?
                     (filteredApplications.map((application) => (
                         <ApplicationCard
