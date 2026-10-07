@@ -1,4 +1,4 @@
-function ApplicationCard({company, position,status}){
+function ApplicationCard({ company, position, status, onDelete }) {
     return (
         <div className="flex items-center justify-between rounded-xl border bg-white p-5 shadow-sm">
             <div>
@@ -7,6 +7,13 @@ function ApplicationCard({company, position,status}){
             </div>
 
             <span className="rounded-full bg-gray-100 px-3 py-1 text-sm font-medium">{status}</span>
+
+            <button
+                type="button"
+                onClick={onDelete}
+                className="rounded-lg border px-3 text-sm font-medium text-red hover:bg-red-50"
+            >Delete
+            </button>
         </div>
     );
 }

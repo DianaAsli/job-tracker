@@ -20,6 +20,11 @@ function Applications() {
         )
     }
 
+    const handleDeleteApplication = (id) => {
+        setApplicationList((currentApplications) => 
+        currentApplications.filter((application) => application.id !== id))
+    }
+
     const filteredApplications = applicationList.filter((application) => {
         const matchesSearch = application.company.toLowerCase().includes(searchTerm.toLocaleLowerCase())
         const matchesStatus = selectedStatus === 'All' || application.status === selectedStatus;
@@ -63,6 +68,7 @@ function Applications() {
                             company={application.company}
                             position={application.position}
                             status={application.status}
+                            onDelete={()=> handleDeleteApplication(application.id)}
                         />))
                     ) : (
                         <div className="rounded-xl border bg-white p-8 text-center">
